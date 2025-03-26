@@ -101,6 +101,9 @@ class DotenvParser:  # noqa: WPS214
         """comment : COMMENT"""
         parsed[0] = Comment.from_token(_get_token(parsed, 1))
 
+    def p_whitespace(self, parsed: yacc.YaccProduction) -> None:
+        """whitespace : WHITESPACE"""
+
     def p_error(self, parsed: yacc.YaccProduction) -> NoReturn:
         """Raising exceptions on syntax errors."""
         raise ParsingError(parsed)
