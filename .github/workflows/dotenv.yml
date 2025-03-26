@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
     - master
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -23,7 +24,7 @@ jobs:
       with:
         persist-credentials: false
     - name: Lint single file
-      uses: wemake-services/dotenv-linter@master
+      uses: ApostolFet/dotenv-linter@test-ci
       with:
         reporter: 'github-pr-review'
         options: 'tests/fixtures/.env.correct'
