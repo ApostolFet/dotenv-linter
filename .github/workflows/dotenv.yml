@@ -1,10 +1,11 @@
 name: dotenv
 
 on:
-  pull_request:
+  workflow_dispatch:
+  push:
     branches:
     - master
-  workflow_dispatch:
+    - test-ci
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
