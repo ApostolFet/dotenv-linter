@@ -26,7 +26,9 @@ ENV POETRY_VERSION='2.1.2'
 
 RUN apk add --no-cache bash git wget
 COPY . .
-RUN python -m pip install "poetry==$POETRY_VERSION" && poetry install \
+RUN python -m pip install "poetry==$POETRY_VERSION" \
+  && poetry config virtualenvs.create false \
+  && poetry install --without dev \
   # Installing reviewdog to optionally comment on pull requests:
   && wget -O - -q 'https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh' \
   | sh -s -- -b /usr/local/bin/ "$REVIEWDOG_VERSION"

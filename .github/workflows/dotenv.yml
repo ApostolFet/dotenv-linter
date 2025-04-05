@@ -32,7 +32,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.github_token }}
     - name: Lint multiple files
-      uses: wemake-services/dotenv-linter@master
+      uses: ApostolFet/dotenv-linter@test-ci-wihtout-debug
       with:
         reporter: 'github-pr-review'
         options: 'tests/fixtures/.env.correct tests/fixtures/.env.duplicate'
