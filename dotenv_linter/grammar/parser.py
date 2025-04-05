@@ -72,6 +72,7 @@ class DotenvParser:  # noqa: WPS214
         """
         body :
              | body line
+             | body whitespace
         """
         if len(parsed) == 3 and parsed[2] is not None:
             self._body_items.append(parsed[2])
@@ -104,6 +105,10 @@ class DotenvParser:  # noqa: WPS214
     def p_comment(self, parsed: yacc.YaccProduction) -> None:
         """comment : COMMENT"""
         parsed[0] = Comment.from_token(_get_token(parsed, 1))
+
+    def p_whitespace(self, parsed: yacc.YaccProduction) -> None:
+        """whitespace : WHITESPACE"""
+        parsed[0] = None
 
     def p_error(self, parsed: yacc.YaccProduction) -> NoReturn:
         """Raising exceptions on syntax errors."""
