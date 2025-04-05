@@ -22,9 +22,11 @@ LABEL vendor="wemake.services"
 
 ENV DOTENV_LINTER_VERSION='0.6.0'
 ENV REVIEWDOG_VERSION='v0.20.3'
+ENV POETRY_VERSION='2.1.2'
 
 RUN apk add --no-cache bash git wget
-RUN pip install "dotenv-linter==$DOTENV_LINTER_VERSION" \
+COPY . .
+RUN python -m pip install "poetry==$POETRY_VERSION" && poetry install --no-dev --no-interaction --no-ansi \
   # Installing reviewdog to optionally comment on pull requests:
   && wget -O - -q 'https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh' \
   | sh -s -- -b /usr/local/bin/ "$REVIEWDOG_VERSION"
