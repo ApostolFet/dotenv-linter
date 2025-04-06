@@ -56,7 +56,11 @@ class DotenvParser:  # noqa: WPS214
     def __init__(self, **kwarg: Any) -> None:
         """Creates inner parser instance."""
         self._lexer = DotenvLexer()
-        self._parser = yacc.yacc(module=self, **kwarg)  # should be last
+        self._parser = yacc.yacc(
+            module=self,
+            debug=False,
+            **kwarg,
+        )  # should be last
 
     def parse(self, to_parse: str, **kwargs: Any) -> Module:
         """Parses input string to FST."""
@@ -68,7 +72,6 @@ class DotenvParser:  # noqa: WPS214
         """
         body :
              | body line
-             | body whitespace
         """
         if len(parsed) == 3 and parsed[2] is not None:
             self._body_items.append(parsed[2])
@@ -102,13 +105,6 @@ class DotenvParser:  # noqa: WPS214
         """comment : COMMENT"""
         parsed[0] = Comment.from_token(_get_token(parsed, 1))
 
-    def p_whitespace(self, parsed: yacc.YaccProduction) -> None:
-        """whitespace : WHITESPACE"""
-        parsed[0] = None
-
     def p_error(self, parsed: yacc.YaccProduction) -> NoReturn:
         """Raising exceptions on syntax errors."""
         raise ParsingError(parsed)
-
-
-DotenvParser()
